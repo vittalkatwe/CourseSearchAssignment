@@ -37,7 +37,6 @@ public class CourseSearchService {
     public CourseSearchResponse search(CourseSearchRequest request) {
         List<Query> filters = new ArrayList<>();
 
-        // 1. Full-text search on title and description
         if (request.getQ() != null && !request.getQ().isBlank()) {
             filters.add(Query.of(q -> q
                     .multiMatch(mm -> mm
@@ -49,7 +48,6 @@ public class CourseSearchService {
             ));
         }
 
-        // 2. Age range filter
         if (request.getMinAge() != null) {
             JsonData minAgeVal = JsonData.of(request.getMinAge());
             RangeQuery minAgeRange = new RangeQuery.Builder()
@@ -68,21 +66,18 @@ public class CourseSearchService {
             filters.add(maxAgeRange._toQuery());
         }
 
-        // 3. Category exact filter
         if (request.getCategory() != null && !request.getCategory().isBlank()) {
             filters.add(Query.of(q -> q
                     .term(t -> t.field("category").value(request.getCategory()))
             ));
         }
 
-        // 4. Type exact filter
         if (request.getType() != null && !request.getType().isBlank()) {
             filters.add(Query.of(q -> q
                     .term(t -> t.field("type").value(request.getType()))
             ));
         }
 
-        // 5. Price range filter
         if (request.getMinPrice() != null || request.getMaxPrice() != null) {
             RangeQuery.Builder priceBuilder = new RangeQuery.Builder().field("price");
             if (request.getMinPrice() != null) priceBuilder.gte(JsonData.of(request.getMinPrice()));
@@ -90,7 +85,6 @@ public class CourseSearchService {
             filters.add(priceBuilder.build()._toQuery());
         }
 
-        // 6. Date filter: nextSessionDate >= startDate
         if (request.getStartDate() != null) {
             JsonData dateVal = JsonData.of(request.getStartDate().toString());
             RangeQuery dateRange = new RangeQuery.Builder()
@@ -100,7 +94,6 @@ public class CourseSearchService {
             filters.add(dateRange._toQuery());
         }
 
-        // Build the bool query
         Query boolQuery = Query.of(q -> q
                 .bool(b -> b.must(filters))
         );

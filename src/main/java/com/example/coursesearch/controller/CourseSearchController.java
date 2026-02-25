@@ -24,13 +24,7 @@ public class CourseSearchController {
         this.courseSearchService = courseSearchService;
     }
 
-    /**
-     * Assignment A – Main search endpoint.
-     *
-     * GET /api/search?q=algebra&minAge=10&maxAge=15&category=Math&type=COURSE
-     *                &minPrice=20&maxPrice=100&startDate=2025-06-01T00:00:00Z
-     *                &sort=priceAsc&page=0&size=10
-     */
+    // assignment A
     @GetMapping
     public ResponseEntity<CourseSearchResponse> search(
             @RequestParam(required = false) String q,
@@ -66,11 +60,7 @@ public class CourseSearchController {
         return ResponseEntity.ok(response);
     }
 
-    /**
-     * Assignment B – Autocomplete suggestions endpoint.
-     *
-     * GET /api/search/suggest?q=phy
-     */
+    // assignment B
     @GetMapping("/suggest")
     public ResponseEntity<List<String>> suggest(@RequestParam String q) {
         log.info("Suggest request: q={}", q);

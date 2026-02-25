@@ -17,7 +17,6 @@ public class CourseSearchRequest {
 
     public CourseSearchRequest() {}
 
-    // Getters
     public String getQ() { return q; }
     public Integer getMinAge() { return minAge; }
     public Integer getMaxAge() { return maxAge; }
@@ -30,7 +29,6 @@ public class CourseSearchRequest {
     public int getPage() { return page; }
     public int getSize() { return size; }
 
-    // Setters
     public void setQ(String q) { this.q = q; }
     public void setMinAge(Integer minAge) { this.minAge = minAge; }
     public void setMaxAge(Integer maxAge) { this.maxAge = maxAge; }

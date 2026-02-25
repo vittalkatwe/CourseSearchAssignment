@@ -30,7 +30,7 @@ public class DataIngestionService {
     @PostConstruct
     public void ingestData() {
         try {
-            // Delete existing data and re-index every startup (ensures fresh data)
+            // delete existing data and re-index every startup (so that, you have fresh data)
             courseRepository.deleteAll();
             log.info("Cleared existing courses from index.");
 
@@ -53,7 +53,7 @@ public class DataIngestionService {
 
             log.info("Parsed {} courses from JSON. Indexing...", courses.size());
 
-            // Populate suggest field for autocomplete
+            // populate suggest field for autocomplete
             for (CourseDocument course : courses) {
                 if (course.getTitle() != null) {
                     course.setSuggest(new Completion(new String[]{course.getTitle()}));
